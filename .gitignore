@@ -1,0 +1,75 @@
+# ==========================================
+# 1. Hybrid C++ / Python Build Artifacts
+# ==========================================
+build/
+out/
+_skbuild/
+dist/
+*.egg-info/
+
+CMakeFiles/
+CMakeCache.txt
+CMakeUserPresets.json
+compile_commands.json
+cmake_install.cmake
+CTestTestfile.cmake
+install_manifest.txt
+
+.ninja_deps
+.ninja_log
+
+# Compiled C++ binaries and libraries
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+*.a
+*.lib
+
+# ==========================================
+# 2. Python Environment, Cache and Testing
+# ==========================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.venv/
+venv/
+
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# ==========================================
+# 3. Operating System Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+Thumbs.db
+ehthumbs.db
+
+# ==========================================
+# 4. IDE / Editor Workspaces
+# ==========================================
+
+# JetBrains IDEs
+.idea/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# VS Code:
+# Ignore local state, but allow shared tasks and debugging configuration.
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json

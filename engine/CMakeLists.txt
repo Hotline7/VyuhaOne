@@ -8,6 +8,7 @@ target_compile_features(vyuhaone_engine PUBLIC cxx_std_20)
 target_sources(vyuhaone_engine
     PRIVATE
         src/version.cpp
+        src/position.cpp
 )
 #===============================================================================
 # Include Directories 

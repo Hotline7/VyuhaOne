@@ -4,10 +4,10 @@
 Accepted
 
 ## Context
-VyuhaOne requires high computational throughput for Monte Carlo Tree Search (MCTS) rollout loops, but needs rapid iteration, dynamic model experimentation, and rich ecosystem access for deep learning training routines.
+VyuhaOne requires high computational throughput for MCTS tree traversal, expansion, backup, and batched neural-network evaluation.
 
 ## Decision
-We adopt a **Hybrid C++/Python Model** connected via `pybind11`.
+I adopted a **Hybrid C++/Python Model** connected via `pybind11`.
 
 * **What belongs in C++?**
   * **Chess Engine & Game Logic:** Board state bitboards, legal move generation, move application, and checkmate/draw evaluation.
@@ -16,21 +16,22 @@ We adopt a **Hybrid C++/Python Model** connected via `pybind11`.
 
 * **What belongs in Python?**
   * **Neural Architecture:** Dual-head ResNet / Transformer definitions using raw PyTorch (`torch.nn.Module`).
-  * **Training Orchestration:** Optimizer steps, loss calculations (cross-entropy + MSE), learning rate scheduling, and checkpoint savings.
+  * **Training Orchestration:** Optimiser steps, loss calculations (cross-entropy + MSE), learning rate scheduling, and checkpoint savings.
   * **Dataset Handling:** Replay buffer management, dataset serialization, and data augmentation.
 
 * **How may they communicate?**
-  * C++ exposes board state structures, move indexers, and MCTS search managers to Python via `pybind11`.
-  * Python passes PyTorch Tensor pointers (`torch::Tensor`) across the boundary into C++ without copying memory (zero-copy via NumPy/C++ buffer protocols).
+  * C++ exposes chess-state operations and search interfaces through a narrow binding layer.
+  * Data exchanged across the boundary must use documented ownership, lifetime, shape, type, and memory-layout rules.
+  * The precise tensor-interchange mechanism will be selected after evaluating pybind11 buffers, NumPy interoperability, DLPack, and PyTorch C++ extensions.
 
 ## Alternatives Considered
 * **Pure C++:** Maximum performance, but extremely slow iteration speed for neural network experimentation and loss tweaking.
-* **Pure Python:** Excellent for model building, but MCTS tree traversals run 10x-100x slower due to Python object overhead and Global Interpreter Lock (GIL) limitations.
+* **Pure Python:** Simplifies development, but interpreter overhead, object allocation, and GIL constraints may limit high-throughput tree traversal. This must be measured using project-specific benchmarks.
 * **Python Engine with C++ Optimization Modules:** Keeping search in Python and calling C++ only for movegen creates high boundary-crossing overhead during millions of node visits.
 
 ## Consequences
 * **What becomes easier?**
-  * MCTS search runs at thousands of evaluations per second in compiled native code.
+  * Native search infrastructure provides the opportunity for high-throughput execution and controlled memory management, subject to benchmarking.
   * Neural network designs can be swapped or modified in Python in seconds without re-compiling C++ cores.
 * **What becomes harder?**
   * Cross-platform build configuration (CMake + MSVC/Clang + pybind11) requires maintenance across Windows and macOS.

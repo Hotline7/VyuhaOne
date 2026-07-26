@@ -17,3 +17,28 @@ No runtime algorithms have been implemented. Performance claims remain design go
 - Testing framework
 - Dependency-management strategy
 - Ownership of neural-network inference batching
+
+## Milestone 1 – Build System Foundation
+
+### What I built
+- Initial cross-platform repository structure.
+- Engine library target.
+- UCI executable target.
+- Version API (`version.hpp` / `version.cpp`).
+- Hierarchical CMake build system.
+
+### Key architectural decisions
+- Separate interface (.hpp) from implementation (.cpp).
+- One CMakeLists per subsystem.
+- Public headers under engine/include.
+- Engine built as a reusable library.
+
+### Biggest lessons
+- Headers declare; source files define.
+- Root CMake delegates to subsystem CMake files.
+- IntelliSense diagnostics are not necessarily compiler diagnostics.
+- Build systems have ownership boundaries just like software components.
+
+### Issues encountered
+- IntelliSense did not recognise compile definitions.
+- Fixed by exporting compile commands and configuring VS Code.

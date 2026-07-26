@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cstddef>
 #include "vyuhaone/types.hpp"
 
 namespace vyuhaone
@@ -15,20 +16,22 @@ namespace vyuhaone
         A7, B7, C7, D7, E7, F7, G7, H7,
         A8, B8, C8, D8, E8, F8, G8, H8,
 
-        Count = 64
+        Count = 64,
+        None = 255
     };
+    inline constexpr std::size_t kSquareCount = 64;
 
     enum class Rank : std::uint8_t
     {
         Rank1 = 0, Rank2, Rank3, Rank4, Rank5, Rank6, Rank7, Rank8,
-        Count = 8
     };
+    inline constexpr std::size_t kRankCount = 8;
 
     enum class File : std::uint8_t
     {
         A = 0, B, C, D, E, F, G, H,
-        Count = 8
     };
+    inline constexpr std::size_t kFileCount = 8;
 
     constexpr Bitboard bit(Square square)
     {

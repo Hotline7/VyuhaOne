@@ -1,9 +1,8 @@
-add library (vyuhaone_engine)
-
-target_sources(vyuhaone_engine PRIVATE
-    src/version.cpp
+add_executable(vyuhaone_uci
+    main.cpp
 )
 
-target_sources(vyuhaone_engine PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
+target_link_libraries(vyuhaone_uci
+    PRIVATE
+        vyuhaone_engine
 )

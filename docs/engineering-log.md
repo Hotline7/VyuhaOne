@@ -18,6 +18,9 @@ No runtime algorithms have been implemented. Performance claims remain design go
 - Dependency-management strategy
 - Ownership of neural-network inference batching
 
+
+
+
 ## Milestone 1 – Build System Foundation
 
 ### What I built
@@ -42,3 +45,35 @@ No runtime algorithms have been implemented. Performance claims remain design go
 ### Issues encountered
 - IntelliSense did not recognise compile definitions.
 - Fixed by exporting compile commands and configuring VS Code.
+
+
+
+## Milestone 2 – Bitboard Position Representation
+
+### What I built
+- Foundational engine types for colour, piece type, castling rights and bitboards.
+- A1=0 through H8=63 square coordinate system.
+- Read-only Position interface with private internal state.
+- Empty default position and explicit StartingPosition factory.
+- Cached colour and combined occupancies.
+- GoogleTest and CTest infrastructure.
+
+### Architectural decisions
+- Use pure bitboards rather than a duplicated piece-on-square array.
+- Treat piece bitboards as authoritative state and occupancies as derived caches.
+- Restrict mutation to Position methods.
+- Use an explicit StartingPosition factory rather than making it the default constructor.
+
+### Invariants
+- Each colour occupancy equals the OR of its six piece bitboards.
+- Combined occupancy equals White occupancy OR Black occupancy.
+- White and Black occupancies must not overlap.
+
+### Issues encountered
+- IntelliSense initially lacked CMake-generated include paths.
+- The test directory was initially processed before GoogleTest was available.
+- Solved by configuring FetchContent before adding tests/cpp and regenerating compile_commands.json.
+
+### Verification
+- Clean CMake build succeeded.
+- Six GoogleTest cases passed through CTest.
